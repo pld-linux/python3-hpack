@@ -8,7 +8,7 @@ Summary:	HTTP/2 Header Encoding for Python 2
 Summary(pl.UTF-8):	Kodowanie nagłówków HTTP/2 dla Pythona 2
 Name:		python-hpack
 Version:	3.0.0
-Release:	2
+Release:	3
 License:	MIT
 Group:		Libraries/Python
 #Source0Download: https://pypi.org/simple/hpack/
