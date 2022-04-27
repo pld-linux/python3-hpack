@@ -7,6 +7,7 @@
 Summary:	HTTP/2 Header Encoding for Python 2
 Summary(pl.UTF-8):	Kodowanie nagłówków HTTP/2 dla Pythona 2
 Name:		python-hpack
+# keep 3.x here for python2 support
 Version:	3.0.0
 Release:	5
 License:	MIT
@@ -68,6 +69,7 @@ Ten moduł zawiera czysto pythonową logikę kodowania nagłówków HTTP/2
 
 %if %{with tests}
 # test_hpack_integration.py requires test_fixtures not included in release tarball
+PYTEST_DISABLE_PLUGIN_AUTOLOAD=1 \
 %{__python} -m pytest test -k 'not TestHPACKDecoderIntegration'
 %endif
 %endif
@@ -76,6 +78,7 @@ Ten moduł zawiera czysto pythonową logikę kodowania nagłówków HTTP/2
 %py3_build
 
 %if %{with tests}
+PYTEST_DISABLE_PLUGIN_AUTOLOAD=1 \
 %{__python3} -m pytest test -k 'not TestHPACKDecoderIntegration'
 %endif
 %endif
