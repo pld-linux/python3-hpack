@@ -6,27 +6,29 @@
 Summary:	HTTP/2 Header Encoding for Python 3
 Summary(pl.UTF-8):	Kodowanie nagłówków HTTP/2 dla Pythona 3
 Name:		python3-hpack
-# keep in sync with python3-h2.spec
-Version:	4.0.0
+# keep in sync with python3-h2.spec (<5 in h2 4.1)
+Version:	4.1.0
 Release:	1
 License:	MIT
 Group:		Libraries/Python
 #Source0Download: https://pypi.org/simple/hpack/
 Source0:	https://files.pythonhosted.org/packages/source/h/hpack/hpack-%{version}.tar.gz
-# Source0-md5:	27e01514ef06dc9fa0798d3dcb7de47c
+# Source0-md5:	16e7423c5b5078c1997fa3eedd2e5935
 URL:		https://pypi.org/project/hpack/
-BuildRequires:	python3-modules >= 1:3.6.1
+BuildRequires:	python3-build
+BuildRequires:	python3-installer
+BuildRequires:	python3-modules >= 1:3.9
 BuildRequires:	python3-setuptools
 %if %{with tests}
-BuildRequires:	python3-hypothesis
-BuildRequires:	python3-pytest
+BuildRequires:	python3-hypothesis >= 6.119.4
+BuildRequires:	python3-pytest >= 8.3.3
 %endif
 BuildRequires:	rpm-pythonprov
-BuildRequires:	rpmbuild(macros) >= 1.714
+BuildRequires:	rpmbuild(macros) >= 2.044
 %if %{with doc}
-BuildRequires:	sphinx-pdg >= 3.2.1
+BuildRequires:	sphinx-pdg-3 >= 7.4.7
 %endif
-Requires:	python3-modules >= 1:3.6.1
+Requires:	python3-modules >= 1:3.9
 BuildArch:	noarch
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
@@ -53,22 +55,24 @@ Dokumentacja API modułu Pythona hpack.
 %setup -q -n hpack-%{version}
 
 %build
-%py3_build
+%py3_build_pyproject
 
 %if %{with tests}
 PYTEST_DISABLE_PLUGIN_AUTOLOAD=1 \
-%{__python3} -m pytest test
+PYTHONPATH=$(pwd)/src \
+%{__python3} -m pytest tests
 %endif
 
 %if %{with doc}
 PYTHONPATH=$(pwd)/src \
-%{__make} -C docs html
+%{__make} -C docs html \
+	SPHINXBUILD=sphinx-build-3
 %endif
 
 %install
 rm -rf $RPM_BUILD_ROOT
 
-%py3_install
+%py3_install_pyproject
 
 %clean
 rm -rf $RPM_BUILD_ROOT
@@ -77,7 +81,7 @@ rm -rf $RPM_BUILD_ROOT
 %defattr(644,root,root,755)
 %doc CHANGELOG.rst CONTRIBUTORS.rst LICENSE README.rst
 %{py3_sitescriptdir}/hpack
-%{py3_sitescriptdir}/hpack-%{version}-py*.egg-info
+%{py3_sitescriptdir}/hpack-%{version}.dist-info
 
 %if %{with doc}
 %files apidocs
