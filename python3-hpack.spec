@@ -7,28 +7,29 @@ Summary:	HTTP/2 Header Encoding for Python 3
 Summary(pl.UTF-8):	Kodowanie nagłówków HTTP/2 dla Pythona 3
 Name:		python3-hpack
 # keep in sync with python3-h2.spec (<5 in h2 4.1)
-Version:	4.1.0
+Version:	4.2.0
 Release:	1
 License:	MIT
 Group:		Libraries/Python
 #Source0Download: https://pypi.org/simple/hpack/
 Source0:	https://files.pythonhosted.org/packages/source/h/hpack/hpack-%{version}.tar.gz
-# Source0-md5:	16e7423c5b5078c1997fa3eedd2e5935
+# Source0-md5:	b9e407d481be0790533689779b6b86ca
 URL:		https://pypi.org/project/hpack/
 BuildRequires:	python3-build
 BuildRequires:	python3-installer
-BuildRequires:	python3-modules >= 1:3.9
-BuildRequires:	python3-setuptools
+BuildRequires:	python3-modules >= 1:3.10
+BuildRequires:	python3-setuptools >= 1:82
+BuildRequires:	python3-wheel >= 0.46.3
 %if %{with tests}
 BuildRequires:	python3-hypothesis >= 6.119.4
-BuildRequires:	python3-pytest >= 8.3.3
+BuildRequires:	python3-pytest >= 9.0.3
 %endif
 BuildRequires:	rpm-pythonprov
 BuildRequires:	rpmbuild(macros) >= 2.044
 %if %{with doc}
 BuildRequires:	sphinx-pdg-3 >= 7.4.7
 %endif
-Requires:	python3-modules >= 1:3.9
+Requires:	python3-modules >= 1:3.10
 BuildArch:	noarch
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
